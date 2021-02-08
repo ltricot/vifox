@@ -30,3 +30,10 @@ endfunction
 
 command! -nargs=0 SendCode call SendCode()
 map <leader>sc :SendCode<CR>
+
+function! StartFox()
+	python3 fox.start()
+endfunction
+
+command! -nargs=0 StartFox call StartFox()
+map <leader>sf :StartFox<CR>

@@ -61,14 +61,11 @@ class Client:
                 return
 
             code = code.rstrip('\n') + 2 * '\n'
-            print(code)
             await sio.emit('code', {'code': code})
-            print('sent')
 
     async def ws2sock(self, sio):
         @sio.on('code')
         async def _(msg):
-            print(msg)
             code = msg['code'].rstrip('\n') + 2 * '\n'
             self.w.write(code.encode())
             self.fd.stdin.write(code.encode())

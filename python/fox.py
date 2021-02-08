@@ -60,7 +60,7 @@ class Plugin(threading.Thread):
                 return
 
             code = code.strip('\n') + '\n'
-            lines = [f'... {l}' for l in code.split('\n')]
+            lines = [f'... {l}' if l else l for l in code.split('\n')]
             lines[0].replace('... ', '>>>')
             self.vimbuf.append(lines)
 

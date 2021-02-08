@@ -5,7 +5,6 @@ import vim
 def sendcode():
     # get selection (code block)
     row, col = vim.current.window.cursor
-    print(row, col)
     buf = vim.current.buffer
 
     lline = row - 1

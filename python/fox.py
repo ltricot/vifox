@@ -62,7 +62,8 @@ class Plugin(threading.Thread):
             code = code.strip('\n') + '\n'
             lines = [f'... {l}' if l else l for l in code.split('\n')]
             lines[0] = lines[0].replace('... ', '>>> ')
-            self.vimbuf.append(lines)
+            for line in lines:
+                self.vimbuf.append(line)
 
     def sendcode(self, code):
         self._q.sync_q.put(code)
@@ -102,12 +103,12 @@ def start():
 def sendcode():
     buf = vim.current.window.buffer
     lineno, col = vim.current.window.cursor
-    top = bot = lineno - 1
+    top, bot = lineno - 1, lineno - 1
 
-    while top > -1 and buf[top]:
+    while top > -1 and buf[top].strip():
         top -= 1
-    while bot < len(buf) and buf[bot]:
+    while bot < len(buf) and buf[bot].strip():
         bot += 1
 
-    code = '\n'.join(buf[top:bot])
+    code = '\n'.join(buf[top + 1:bot])
     plug.sendcode(code)
